@@ -12,3 +12,12 @@ jobs:
         id: install-appmap
         with:
           verbose: true
+      - name: Run tests
+        run: mvn test
+      - name: Build AppMap archive
+        run: /tmp/appmap archive
+      - name: Store the AppMap archive
+        uses: actions/upload-artifact@v3
+        with:
+          name: archive
+          path: .appmap/**/*.tar
