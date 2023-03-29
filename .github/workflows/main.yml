@@ -5,13 +5,13 @@ jobs:
     runs-on: ubuntu-latest
     name: Install AppMap
     steps:
+      - name: Checkout step
+        uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '8'
           cache: 'maven'
-      - name: Checkout step
-        uses: actions/checkout@v3
       - name: Install AppMap step
         uses: getappmap/install-appmap-action@v1-pre.1
         id: install-appmap
