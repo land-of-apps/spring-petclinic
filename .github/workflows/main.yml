@@ -12,5 +12,3 @@ jobs:
         id: install-appmap
         with:
           verbose: true
-      - name: Commit changes
-        uses: EndBug/add-and-commit@v9
