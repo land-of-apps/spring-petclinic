@@ -10,7 +10,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: 'semeru'
-          java-version: '8'
+          java-version: '11'
           cache: 'maven'
       - name: Install AppMap step
         uses: getappmap/install-appmap-action@v1-pre.1
