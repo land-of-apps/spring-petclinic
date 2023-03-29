@@ -5,6 +5,11 @@ jobs:
     runs-on: ubuntu-latest
     name: Install AppMap
     steps:
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '8'
+          cache: 'maven'
       - name: Checkout step
         uses: actions/checkout@v3
       - name: Install AppMap step
@@ -13,7 +18,7 @@ jobs:
         with:
           verbose: true
       - name: Run tests
-        run: mvn test
+        run: mvn --no-transfer-progress test
       - name: Build AppMap archive
         run: /tmp/appmap archive
       - name: Store the AppMap archive
