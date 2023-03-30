@@ -18,7 +18,7 @@ jobs:
         with:
           verbose: true
       - name: Run tests
-        run: mvn --no-transfer-progress test
+        run: ./mvnw --no-transfer-progress test
       - name: Build AppMap archive
         run: /tmp/appmap archive
       - name: Store the AppMap archive
