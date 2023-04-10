@@ -28,7 +28,7 @@ jobs:
       - name: Run tests
         run: ./mvnw --no-transfer-progress test
       - name: Archive AppMaps
-        uses: getappmap/archive-appmap-action@v1-pre.9
+        uses: getappmap/archive-appmap-action@v1-pre.10
         with:
           revision: 628862206bd20efcce9ae5f97b89aad59bb2c9ca
           verbose: true
