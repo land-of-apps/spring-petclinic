@@ -1,10 +1,7 @@
-name: AppMap Archive
+name: CI
 
 on:
   pull_request:
-  schedule:
-    # Keep the artifact up to date, as it will expire after 90 days.
-    - cron: 1 1 1 * *
 
 env:
   APPMAP_TELEMETRY_DISABLED: 'true'
@@ -12,7 +9,6 @@ env:
 jobs:
   install_appmap_job:
     runs-on: ubuntu-latest
-    name: Install AppMap
     steps:
       - name: Checkout step
         uses: actions/checkout@v3
@@ -21,14 +17,5 @@ jobs:
           distribution: 'temurin'
           java-version: '8'
           cache: 'maven'
-      - name: Install AppMap tools
-        uses: getappmap/install-appmap-action@v1-pre.5
-        with:
-          verbose: true
       - name: Run tests
         run: ./mvnw --no-transfer-progress test
-      - name: Archive AppMaps
-        uses: getappmap/archive-appmap-action@v1-pre.8
-        with:
-          commit-sha: ${{ github.event.pull_request.head.sha }}
-          verbose: true
