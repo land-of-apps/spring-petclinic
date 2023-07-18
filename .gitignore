@@ -12,3 +12,5 @@ target/*
 _site/
 **/*.log
 **/*.appmap.json
+.appmap
+
