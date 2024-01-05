@@ -19,6 +19,8 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotEmpty;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 /**
  * Simple JavaBean domain object representing an person.
  *
@@ -64,7 +66,6 @@ public class Person extends BaseEntity {
 	}
 
 	public String getPassword() {
-		return this.login;
+		return new BCryptPasswordEncoder().encode(this.login);
 	}
-
 }
