@@ -29,21 +29,22 @@ jobs:
           cache: "maven"
 
       - name: Install AppMap tools
-        uses: getappmap/install-action@v1.0
+        uses: getappmap/install-action@v1
         with:
           project-type: maven
+          install-appmap-library: false
 
-      - name: Run tests
+      - name: Build and test
         run: ./mvnw --no-transfer-progress test
 
       - name: Archive AppMaps
         if: github.event_name != 'pull_request'
-        uses: getappmap/archive-action@v1-pre.13
+        uses: getappmap/archive-action@v1
 
       - name: Analyze AppMaps
         # We want to analyze the AppMaps even if the tests fail.
         if: (success() || failure()) && github.event_name == 'pull_request'
-        uses: getappmap/analyze-action@v1-pre.14
+        uses: getappmap/analyze-action@v1
         with:
           base-revision: ${{ github.event.pull_request.base.sha }}
           head-revision: ${{ github.event.pull_request.head.sha }}
