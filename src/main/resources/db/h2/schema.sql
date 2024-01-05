@@ -9,6 +9,7 @@ DROP TABLE owners IF EXISTS;
 
 CREATE TABLE vets (
   id         INTEGER IDENTITY PRIMARY KEY,
+  login      VARCHAR(30),
   first_name VARCHAR(30),
   last_name  VARCHAR(30)
 );
@@ -35,6 +36,7 @@ CREATE INDEX types_name ON types (name);
 
 CREATE TABLE owners (
   id         INTEGER IDENTITY PRIMARY KEY,
+  login      VARCHAR(30),
   first_name VARCHAR(30),
   last_name  VARCHAR_IGNORECASE(30),
   address    VARCHAR(255),

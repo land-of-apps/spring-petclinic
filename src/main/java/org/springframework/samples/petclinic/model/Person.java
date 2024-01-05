@@ -27,6 +27,10 @@ import javax.validation.constraints.NotEmpty;
 @MappedSuperclass
 public class Person extends BaseEntity {
 
+	@Column(name = "login")
+	@NotEmpty
+	private String login;
+
 	@Column(name = "first_name")
 	@NotEmpty
 	private String firstName;
@@ -34,6 +38,14 @@ public class Person extends BaseEntity {
 	@Column(name = "last_name")
 	@NotEmpty
 	private String lastName;
+
+	public String getLogin() {
+		return this.login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
 
 	public String getFirstName() {
 		return this.firstName;
