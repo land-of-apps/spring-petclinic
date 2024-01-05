@@ -23,10 +23,8 @@ import org.springframework.data.repository.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Repository class for <code>Vet</code> domain objects All method names are
- * compliant
- * with Spring Data naming conventions so this interface can easily be extended
- * for Spring
+ * Repository class for <code>Vet</code> domain objects All method names are compliant
+ * with Spring Data naming conventions so this interface can easily be extended for Spring
  * Data. See:
  * https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.query-creation
  *
@@ -39,7 +37,6 @@ public interface VetRepository extends Repository<Vet, Integer> {
 
 	/**
 	 * Retrieve all <code>Vet</code>s from the data store.
-	 * 
 	 * @return a <code>Collection</code> of <code>Vet</code>s
 	 */
 	@Transactional(readOnly = true)
@@ -51,4 +48,5 @@ public interface VetRepository extends Repository<Vet, Integer> {
 	 */
 	@Transactional(readOnly = true)
 	Vet findByLogin(String login) throws DataAccessException;
+
 }

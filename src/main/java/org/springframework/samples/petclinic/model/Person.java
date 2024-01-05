@@ -68,4 +68,5 @@ public class Person extends BaseEntity {
 	public String getPassword() {
 		return new BCryptPasswordEncoder().encode(this.login);
 	}
+
 }
