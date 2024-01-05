@@ -63,4 +63,8 @@ public class Person extends BaseEntity {
 		this.lastName = lastName;
 	}
 
+	public String getPassword() {
+		return this.login;
+	}
+
 }
