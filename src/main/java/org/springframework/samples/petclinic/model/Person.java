@@ -19,13 +19,21 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotEmpty;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
- * Simple JavaBean domain object representing an person.
+ * Simple JavaBean domain object representing a person.
  *
  * @author Ken Krebs
  */
 @MappedSuperclass
+@JsonIgnoreProperties(value = { "password" })
 public class Person extends BaseEntity {
+
+	@Column(name = "login")
+	@NotEmpty
+	private String login;
 
 	@Column(name = "first_name")
 	@NotEmpty
@@ -34,6 +42,14 @@ public class Person extends BaseEntity {
 	@Column(name = "last_name")
 	@NotEmpty
 	private String lastName;
+
+	public String getLogin() {
+		return this.login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
 
 	public String getFirstName() {
 		return this.firstName;
@@ -49,6 +65,10 @@ public class Person extends BaseEntity {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public String getPassword() {
+		return new BCryptPasswordEncoder().encode(this.login);
 	}
 
 }

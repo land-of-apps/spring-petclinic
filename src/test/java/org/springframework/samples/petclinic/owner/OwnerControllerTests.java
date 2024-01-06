@@ -30,6 +30,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.samples.petclinic.visit.Visit;
 import org.springframework.samples.petclinic.visit.VisitRepository;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.empty;
@@ -49,6 +50,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Colin But
  */
 @WebMvcTest(OwnerController.class)
+@ActiveProfiles("test")
 class OwnerControllerTests {
 
 	private static final int TEST_OWNER_ID = 1;
@@ -95,7 +97,7 @@ class OwnerControllerTests {
 
 	@Test
 	void testProcessCreationFormSuccess() throws Exception {
-		mockMvc.perform(post("/owners/new").param("firstName", "Joe").param("lastName", "Bloggs")
+		mockMvc.perform(post("/owners/new").param("login", "joe").param("firstName", "Joe").param("lastName", "Bloggs")
 				.param("address", "123 Caramel Street").param("city", "London").param("telephone", "01316761638"))
 				.andExpect(status().is3xxRedirection());
 	}
@@ -151,7 +153,7 @@ class OwnerControllerTests {
 
 	@Test
 	void testProcessUpdateOwnerFormSuccess() throws Exception {
-		mockMvc.perform(post("/owners/{ownerId}/edit", TEST_OWNER_ID).param("firstName", "Joe")
+		mockMvc.perform(post("/owners/{ownerId}/edit", TEST_OWNER_ID).param("login", "joe").param("firstName", "Joe")
 				.param("lastName", "Bloggs").param("address", "123 Caramel Street").param("city", "London")
 				.param("telephone", "01616291589")).andExpect(status().is3xxRedirection())
 				.andExpect(view().name("redirect:/owners/{ownerId}"));

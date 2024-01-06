@@ -43,4 +43,10 @@ public interface VetRepository extends Repository<Vet, Integer> {
 	@Cacheable("vets")
 	Collection<Vet> findAll() throws DataAccessException;
 
+	/**
+	 * Retrieve a {@link Vet} from the data store by login.
+	 */
+	@Transactional(readOnly = true)
+	Vet findByLogin(String login) throws DataAccessException;
+
 }

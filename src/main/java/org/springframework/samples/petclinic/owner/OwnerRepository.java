@@ -56,6 +56,12 @@ public interface OwnerRepository extends Repository<Owner, Integer> {
 	Owner findById(@Param("id") Integer id);
 
 	/**
+	 * Retrieve a {@link Owner} from the data store by login.
+	 */
+	@Transactional(readOnly = true)
+	Owner findByLogin(String login);
+
+	/**
 	 * Save an {@link Owner} to the data store, either inserting or updating it.
 	 * @param owner the {@link Owner} to save
 	 */

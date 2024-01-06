@@ -9,7 +9,20 @@ on:
     - cron: "0 0 * * 0"
 
 permissions:
-  contents: read
+  # Read the baseline artifact in order to perform
+  # the AppMap comparison.
+  actions: read
+
+  # Commit the AppMap configuration.
+  # If the EndBug/add-and-commit is removed,
+  # this can be changed to 'read'.
+  contents: write
+
+  # Add check annotations to the source code when
+  # a problem is detected.
+  checks: write
+
+  # Add a comment to the pull request.
   pull-requests: write
 
 env:

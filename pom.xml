@@ -67,6 +67,12 @@
         </exclusions>
     </dependency>
 
+    <!-- Spring Security -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+
     <!-- Databases - Uses H2 by default -->
     <dependency>
       <groupId>com.h2database</groupId>
