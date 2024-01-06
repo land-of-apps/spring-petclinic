@@ -21,12 +21,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().anyRequest().authenticated();
+		http.csrf().disable(); // Support for this is not included in the original Pet
+								// Clinic code
 		http.formLogin().loginPage("/login").permitAll();
 		http.logout().logoutSuccessUrl("/login?logout") // URL to redirect to after logout
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET")).invalidateHttpSession(true) // Invalidate
-																												// session
-																												// after
-																												// logout
+				// session
+				// after
+				// logout
 				.deleteCookies("JSESSIONID") // Delete cookies on logout
 				.permitAll();
 	}
