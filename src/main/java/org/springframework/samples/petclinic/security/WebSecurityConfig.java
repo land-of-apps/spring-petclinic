@@ -21,6 +21,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().anyRequest().authenticated();
 		http.formLogin().loginPage("/login").permitAll();
+		http.logout().logoutUrl("/logout") // URL to trigger logout (default is "/logout")
+				.logoutSuccessUrl("/login?logout") // URL to redirect to after logout
+				.invalidateHttpSession(true) // Invalidate session after logout
+				.deleteCookies("JSESSIONID") // Delete cookies on logout
+				.permitAll();
 	}
 
 	@Override
