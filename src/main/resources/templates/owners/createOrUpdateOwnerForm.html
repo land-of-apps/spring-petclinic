@@ -12,6 +12,9 @@
     >
       <div class="form-group has-feedback">
         <input
+          th:replace="~{fragments/inputField :: input ('Login', 'login', 'text')}"
+        />
+        <input
           th:replace="~{fragments/inputField :: input ('First Name', 'firstName', 'text')}"
         />
         <input
