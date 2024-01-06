@@ -20,13 +20,15 @@ import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotEmpty;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
- * Simple JavaBean domain object representing an person.
+ * Simple JavaBean domain object representing a person.
  *
  * @author Ken Krebs
  */
 @MappedSuperclass
+@JsonIgnoreProperties(value = { "password" })
 public class Person extends BaseEntity {
 
 	@Column(name = "login")
