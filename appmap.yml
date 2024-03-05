@@ -1,5 +1,6 @@
-name: spring-petclinic
+name: "spring-petclinic"
 packages:
-  - path: org.springframework.samples.petclinic
-language: java
-appmap_dir: target/appmap
+  - path: "org.springframework.samples.petclinic"
+  - path: "org.springframework.security.web.authentication"
+language: "java"
+appmap_dir: "tmp/appmap"
