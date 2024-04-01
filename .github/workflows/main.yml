@@ -12,9 +12,6 @@ permissions:
   contents: read
   pull-requests: write
 
-env:
-  APPMAP_TELEMETRY_DISABLED: "true"
-
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -42,22 +39,7 @@ jobs:
         run: mkdir -p tmp && mv target/appmap tmp/
 
       - name: Build BM25 index of the source code
-        run: appmap index --bm25 .appmap/fulltext/lunr.json
-      - name: Store the BM25 index
-        uses: actions/upload-artifact@v2
-        with:
-          name: bm25-index
-          path: .appmap/fulltext/lunr.json
+        run: appmap index --bm25 tmp/appmap/lunr.json
 
       - name: Archive AppMaps
-        if: github.event_name != 'pull_request'
         uses: getappmap/archive-action@v1
-
-      - name: Analyze AppMaps
-        # We want to analyze the AppMaps even if the tests fail.
-        if: (success() || failure()) && github.event_name == 'pull_request'
-        uses: getappmap/analyze-action@v1
-        with:
-          base-revision: ${{ github.event.pull_request.base.sha }}
-          head-revision: ${{ github.event.pull_request.head.sha }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
