@@ -33,6 +33,15 @@ jobs:
         with:
           project-type: maven
           install-appmap-library: false
+          tools-url: https://github.com/getappmap/appmap-js/releases/download/%40appland%2Fappmap-bm25-10e1c36e/appmap-linux-x64
+
+      - name: Build BM25 index of the source code
+        run: appmap index --bm25 .appmap/fulltext/lunr.json
+      - name: Store the BM25 index
+        uses: actions/upload-artifact@v2
+        with:
+          name: bm25-index
+          path: .appmap/fulltext/lunr.json
 
       - name: Build and test
         run: ./mvnw --no-transfer-progress test
