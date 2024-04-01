@@ -38,6 +38,9 @@ jobs:
       - name: Build and test
         run: ./mvnw --no-transfer-progress test
 
+      - name: Move AppMaps to standard location
+        run: mkdir -p tmp && mv target/appmap tmp/
+
       - name: Build BM25 index of the source code
         run: appmap index --bm25 .appmap/fulltext/lunr.json
       - name: Store the BM25 index
