@@ -38,17 +38,18 @@ jobs:
       - name: Build and test
         run: ./mvnw --no-transfer-progress test
 
-      - name: Move AppMaps to standard location
-        run: mkdir -p tmp && mv target/appmap tmp/
+      - name: Collect and index AppMaps
+        run: |
+          mkdir -p tmp && mv target/appmap tmp/
+          appmap index
 
       - name: Docker build target=appmaps
         run: docker build --target appmaps -t spring-petclinic .
 
-      - name: Copy appmap tools to local directory
-        run: cp -r /usr/local/bin/appmap .
-
       - name: Docker build (final)
-        run: docker build --target final -t spring-petclinic .
+        run: |
+          cp -r /usr/local/bin/appmap .
+          docker build --target final -t spring-petclinic .
 
       - name: Push to Heroku
         env:
