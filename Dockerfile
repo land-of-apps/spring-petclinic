@@ -25,4 +25,4 @@ COPY appmap /usr/local/bin/appmap
 
 EXPOSE 30102
 
-ENTRYPOINT /usr/local/bin/appmap context-provider -d /app -p ${PORT:-30102}
+CMD /usr/local/bin/appmap context-provider -d /app -p "${PORT:-30102}"
