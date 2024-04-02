@@ -19,6 +19,9 @@ jobs:
       - name: Checkout step
         uses: actions/checkout@v3
 
+      - name: Docker build target=source
+        run: docker build --target source -t spring-petclinic .
+
       - uses: actions/setup-java@v3
         with:
           distribution: "temurin"
@@ -30,7 +33,7 @@ jobs:
         with:
           project-type: maven
           install-appmap-library: false
-          tools-url: https://github.com/getappmap/appmap-js/releases/download/%40appland%2Fappmap-bm25-10e1c36e/appmap-linux-x64
+          tools-url: https://github.com/getappmap/appmap-js/releases/download/%40appland%2Fappmap-bm25-5208f6ee/appmap-linux-x64
 
       - name: Build and test
         run: ./mvnw --no-transfer-progress test
@@ -38,8 +41,11 @@ jobs:
       - name: Move AppMaps to standard location
         run: mkdir -p tmp && mv target/appmap tmp/
 
-      - name: Build BM25 index of the source code
-        run: appmap index --bm25 tmp/appmap/lunr.json
+      - name: Docker build target=appmaps
+        run: docker build --target appmaps -t spring-petclinic .
 
-      - name: Archive AppMaps
-        uses: getappmap/archive-action@v1
+      - name: Copy appmap tools to local directory
+        run: cp -r /usr/local/bin/appmap .
+
+      - name: Docker build (final)
+        run: docker build --target final -t spring-petclinic .
