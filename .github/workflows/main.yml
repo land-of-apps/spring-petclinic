@@ -33,7 +33,7 @@ jobs:
         with:
           project-type: maven
           install-appmap-library: false
-          tools-url: https://github.com/getappmap/appmap-js/releases/download/%40appland%2Fappmap-bm25-5208f6ee/appmap-linux-x64
+          tools-url: https://github.com/getappmap/appmap-js/releases/download/%40appland%2Fappmap-context-api.26fbdf21/appmap-linux-x64
 
       - name: Build and test
         run: ./mvnw --no-transfer-progress test
