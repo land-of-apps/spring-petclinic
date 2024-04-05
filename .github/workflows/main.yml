@@ -41,6 +41,7 @@ jobs:
       - name: Collect and index AppMaps
         run: |
           mkdir -p tmp && mv target/appmap tmp/
+          npm install -g better-sqlite3
           # Index the AppMap data, creating index directories.
           appmap index
           # Build source and AppMap data index files.
