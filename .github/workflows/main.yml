@@ -33,7 +33,7 @@ jobs:
         with:
           project-type: maven
           install-appmap-library: false
-          tools-url: https://github.com/getappmap/appmap-js/releases/download/%40appland%2Fappmap-context-api.26fbdf21/appmap-linux-x64
+          tools-url: https://github.com/getappmap/appmap-js/releases/download/%40appland%2Fappmap-context-api.d9ecd4bd/appmap-linux-x64
 
       - name: Build and test
         run: ./mvnw --no-transfer-progress test
@@ -41,7 +41,10 @@ jobs:
       - name: Collect and index AppMaps
         run: |
           mkdir -p tmp && mv target/appmap tmp/
+          # Index the AppMap data, creating index directories.
           appmap index
+          # Build source and AppMap data index files.
+          appmap context-provider --no-listen
 
       - name: Docker build target=appmaps
         run: docker build --target appmaps -t spring-petclinic .
@@ -58,4 +61,4 @@ jobs:
           curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
           heroku container:login
           heroku container:push -a aictx-spring-petclinic web
-          heroku container:release -a aictx-spring-petclinic web
+          # heroku container:release -a aictx-spring-petclinic web
