@@ -61,4 +61,4 @@ jobs:
           curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
           heroku container:login
           heroku container:push -a aictx-spring-petclinic web
-          # heroku container:release -a aictx-spring-petclinic web
+          heroku container:release -a aictx-spring-petclinic web
