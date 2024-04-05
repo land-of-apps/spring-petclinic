@@ -23,6 +23,9 @@ COPY --from=source /app /app
 COPY --from=appmaps /app /app
 COPY appmap /usr/local/bin/appmap
 
+COPY source-index.sqlite .
+COPY appmap-index.sqlite .
+
 # Make sure that the AppMap directories as-built on the GitHub runner also
 # resolve inside the container.
 RUN mkdir -p /home/runner/work/spring-petclinic
