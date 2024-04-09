@@ -12,15 +12,15 @@ permissions:
   contents: read
   pull-requests: write
 
-env:
-  APPMAP_TELEMETRY_DISABLED: "true"
-
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout step
         uses: actions/checkout@v3
+
+      - name: Docker build target=source
+        run: docker build --target source -t spring-petclinic .
 
       - uses: actions/setup-java@v3
         with:
@@ -33,19 +33,32 @@ jobs:
         with:
           project-type: maven
           install-appmap-library: false
+          tools-url: https://github.com/getappmap/appmap-js/releases/download/%40appland%2Fappmap-context-api.f9e7755f/appmap-linux-x64
 
       - name: Build and test
         run: ./mvnw --no-transfer-progress test
 
-      - name: Archive AppMaps
-        if: github.event_name != 'pull_request'
-        uses: getappmap/archive-action@v1
+      - name: Collect and index AppMaps
+        run: |
+          mkdir -p tmp && mv target/appmap tmp/
+          # Index the AppMap data, creating index directories.
+          appmap index
+          # Build source and AppMap data index files.
+          appmap context-provider --no-listen
 
-      - name: Analyze AppMaps
-        # We want to analyze the AppMaps even if the tests fail.
-        if: (success() || failure()) && github.event_name == 'pull_request'
-        uses: getappmap/analyze-action@v1
-        with:
-          base-revision: ${{ github.event.pull_request.base.sha }}
-          head-revision: ${{ github.event.pull_request.head.sha }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Docker build target=appmaps
+        run: docker build --target appmaps -t spring-petclinic .
+
+      - name: Docker build (final)
+        run: |
+          cp -r /usr/local/bin/appmap .
+          docker build --target final -t spring-petclinic .
+
+      - name: Push to Heroku
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: |
+          curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
+          heroku container:login
+          heroku container:push -a aictx-spring-petclinic web
+          heroku container:release -a aictx-spring-petclinic web
