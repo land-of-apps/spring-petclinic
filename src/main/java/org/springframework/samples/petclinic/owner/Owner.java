@@ -32,6 +32,7 @@ import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 /**
  * Simple JavaBean domain object representing an owner.
@@ -56,7 +57,7 @@ public class Owner extends Person {
 
 	@Column(name = "telephone")
 	@NotBlank
-	@Digits(fraction = 0, integer = 10)
+	@Pattern(regexp = "\\d{3}-\\d{3}-\\d{4}", message = "Phone number must be in the format XXX-XXX-XXXX")
 	private String telephone;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
