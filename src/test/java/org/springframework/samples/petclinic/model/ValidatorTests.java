@@ -28,6 +28,8 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 
+import org.springframework.samples.petclinic.owner.Owner;
+
 /**
  * @author Michael Isvy Simple test to make sure that Bean Validation is working (useful
  * when upgrading to a new version of Hibernate Validator/ Bean Validation)
@@ -38,6 +40,41 @@ class ValidatorTests {
 		LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean();
 		localValidatorFactoryBean.afterPropertiesSet();
 		return localValidatorFactoryBean;
+	}
+
+	@Test
+	void shouldNotValidateWhenPhoneNumberIsInvalid() {
+		LocaleContextHolder.setLocale(Locale.ENGLISH);
+		Owner owner = new Owner();
+		owner.setFirstName("John");
+		owner.setLastName("Doe");
+		owner.setCity("New York");
+		owner.setAddress("5th Avenue");
+		owner.setTelephone("123-45-678");
+
+		Validator validator = createValidator();
+		Set<ConstraintViolation<Owner>> constraintViolations = validator.validate(owner);
+
+		assertThat(constraintViolations).hasSize(1);
+		ConstraintViolation<Owner> violation = constraintViolations.iterator().next();
+		assertThat(violation.getPropertyPath().toString()).isEqualTo("telephone");
+		assertThat(violation.getMessage()).isEqualTo("Phone number must be in the format XXX-XXX-XXXX");
+	}
+
+	@Test
+	void shouldValidateWhenPhoneNumberIsValid() {
+		LocaleContextHolder.setLocale(Locale.ENGLISH);
+		Owner owner = new Owner();
+		owner.setFirstName("John");
+		owner.setLastName("Doe");
+		owner.setCity("New York");
+		owner.setAddress("5th Avenue");
+		owner.setTelephone("123-456-7890");
+
+		Validator validator = createValidator();
+		Set<ConstraintViolation<Owner>> constraintViolations = validator.validate(owner);
+
+		assertThat(constraintViolations).isEmpty();
 	}
 
 	@Test
