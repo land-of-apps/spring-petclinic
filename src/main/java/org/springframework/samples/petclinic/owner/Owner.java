@@ -29,6 +29,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 
+import com.appland.appmap.annotation.Labels;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.core.style.ToStringCreator;
@@ -62,8 +63,13 @@ public class Owner extends Person {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
 	private Set<Pet> pets;
 
-	public String getAddress() {
+	@Labels("secret")
+	public String address() {
 		return this.address;
+	}
+
+	public String getAddress() {
+		return address();
 	}
 
 	public void setAddress(String address) {
@@ -78,8 +84,13 @@ public class Owner extends Person {
 		this.city = city;
 	}
 
-	public String getTelephone() {
+	@Labels("secret")
+	public String telephone() {
 		return this.telephone;
+	}
+
+	public String getTelephone() {
+		return telephone();
 	}
 
 	public void setTelephone(String telephone) {
@@ -143,8 +154,8 @@ public class Owner extends Person {
 		return new ToStringCreator(this)
 
 				.append("id", this.getId()).append("new", this.isNew()).append("lastName", this.getLastName())
-				.append("firstName", this.getFirstName()).append("address", this.address).append("city", this.city)
-				.append("telephone", this.telephone).toString();
+				.append("firstName", this.getFirstName()).append("address", this.getAddress()).append("city", this.city)
+				.append("telephone", this.getTelephone()).toString();
 	}
 
 }

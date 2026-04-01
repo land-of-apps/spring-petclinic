@@ -13,4 +13,4 @@ _site/
 **/*.log
 **/*.appmap.json
 .appmap
-
+appmap-findings.json

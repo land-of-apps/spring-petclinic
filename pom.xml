@@ -116,6 +116,11 @@
       <artifactId>spring-boot-devtools</artifactId>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>com.appland</groupId>
+      <artifactId>appmap-annotation</artifactId>
+      <version>1.28.0</version>
+    </dependency>
   </dependencies>
 
   <build>

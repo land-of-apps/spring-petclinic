@@ -19,6 +19,8 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotEmpty;
 
+import com.appland.appmap.annotation.Labels;
+
 /**
  * Simple JavaBean domain object representing an person.
  *
@@ -35,16 +37,26 @@ public class Person extends BaseEntity {
 	@NotEmpty
 	private String lastName;
 
-	public String getFirstName() {
+	@Labels("secret")
+	public String firstName() {
 		return this.firstName;
+	}
+
+	public String getFirstName() {
+		return firstName();
 	}
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
-	public String getLastName() {
+	@Labels("secret")
+	public String lastName() {
 		return this.lastName;
+	}
+
+	public String getLastName() {
+		return lastName();
 	}
 
 	public void setLastName(String lastName) {

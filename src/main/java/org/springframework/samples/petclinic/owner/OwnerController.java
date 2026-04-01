@@ -15,6 +15,9 @@
  */
 package org.springframework.samples.petclinic.owner;
 
+import com.appland.appmap.annotation.Labels;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.samples.petclinic.visit.VisitRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +41,8 @@ import java.util.Map;
  */
 @Controller
 class OwnerController {
+
+	private static final Logger logger = LoggerFactory.getLogger(OwnerController.class);
 
 	private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
 
@@ -138,8 +143,16 @@ class OwnerController {
 		for (Pet pet : owner.getPets()) {
 			pet.setVisitsInternal(visits.findByPetId(pet.getId()));
 		}
+		logOwnerAccess(owner);
 		mav.addObject(owner);
 		return mav;
+	}
+
+	@Labels("log")
+	void logOwnerAccess(Owner owner) {
+		logger.info("Owner accessed: {} {} at {} tel {}",
+				owner.getFirstName(), owner.getLastName(),
+				owner.getAddress(), owner.getTelephone());
 	}
 
 }
